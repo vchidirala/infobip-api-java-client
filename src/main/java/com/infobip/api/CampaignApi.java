@@ -27,6 +27,7 @@ public class CampaignApi {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "GET", "/number-registration/1/campaigns/{campaignId}/network-statuses")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (campaignId != null) {
             builder.addPathParameter(new Parameter("campaignId", campaignId));
@@ -90,6 +91,7 @@ public class CampaignApi {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "GET", "/number-registration/1/campaigns/{campaignId}")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (campaignId != null) {
             builder.addPathParameter(new Parameter("campaignId", campaignId));
@@ -111,13 +113,13 @@ public class CampaignApi {
         /**
          * Executes the GetCampaignRequest request
          *
-         * @return List<GetCampaignResponse>
+         * @return GetCampaignResponse
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
-        public List<GetCampaignNetworkStatusResponse> execute() throws ApiException {
+        public GetCampaignResponse execute() throws ApiException {
             RequestDefinition getCampaignDefinition = getCampaignDefinition(campaignId);
             return apiClient.execute(
-                    getCampaignDefinition, new TypeReference<List<GetCampaignNetworkStatusResponse>>() {}.getType());
+                    getCampaignDefinition, new TypeReference<GetCampaignResponse>() {}.getType());
         }
 
         /**
@@ -129,7 +131,7 @@ public class CampaignApi {
         public Call executeAsync(ApiCallback<Void> callback) {
             RequestDefinition createBrandsDefinition = getCampaignNetworkStatusDefinition(campaignId);
             return apiClient.executeAsync(
-                    createBrandsDefinition, new TypeReference<List<GetCampaignResponse>>() {}.getType(), callback);
+                    createBrandsDefinition, new TypeReference<GetCampaignResponse>() {}.getType(), callback);
         }
     }
 
@@ -203,13 +205,16 @@ public class CampaignApi {
         return new CampaignApi.CreateCampaignRequestBuilder(createCampaignRequest);
     }
 
-    private RequestDefinition addNumbersDefinition(AddNumbersRequest addNumbersRequest) {
+    private RequestDefinition addNumbersDefinition(AddNumbersRequest addNumbersRequest, String campaignId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "POST", "/number-registration/1/campaigns/{campaignId}/add-numbers")
                 .body(addNumbersRequest)
                 .requiresAuthentication(true)
                 .accept("application/json")
                 .contentType("application/json");
+        if (campaignId != null) {
+            builder.addPathParameter(new Parameter("campaignId", campaignId));
+        }
 
         return builder.build();
     }
@@ -220,9 +225,11 @@ public class CampaignApi {
     public class AddNumbersRequestBuilder {
 
         private final AddNumbersRequest request;
+        private final String campaignId;
 
-        private AddNumbersRequestBuilder(AddNumbersRequest request) {
+        private AddNumbersRequestBuilder(AddNumbersRequest request, String campaignId) {
             this.request = Objects.requireNonNull(request, "The required parameter 'AddNumbersRequest' is missing.");
+            this.campaignId = Objects.requireNonNull(campaignId, "The required parameter 'campaignId' is missing.");
         }
 
         /**
@@ -231,7 +238,7 @@ public class CampaignApi {
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
         public void execute() throws ApiException {
-            RequestDefinition addNumbersDefinition = addNumbersDefinition(request);
+            RequestDefinition addNumbersDefinition = addNumbersDefinition(request, campaignId);
             apiClient.execute(addNumbersDefinition);
         }
 
@@ -242,7 +249,7 @@ public class CampaignApi {
          * @return The {@link Call} associated with the API request.
          */
         public Call executeAsync(ApiCallback<Void> callback) {
-            RequestDefinition addNumbersDefinition = addNumbersDefinition(request);
+            RequestDefinition addNumbersDefinition = addNumbersDefinition(request, campaignId);
             return apiClient.executeAsync(addNumbersDefinition, callback);
         }
     }
@@ -253,10 +260,11 @@ public class CampaignApi {
      * add Numbers.
      *
      * @param addNumbersRequest (required)
+     * @param campaignId (required)
      * @return AddNumbersRequestBuilder
      */
-    public CampaignApi.AddNumbersRequestBuilder addNumbers(AddNumbersRequest addNumbersRequest) {
-        return new CampaignApi.AddNumbersRequestBuilder(addNumbersRequest);
+    public CampaignApi.AddNumbersRequestBuilder addNumbers(AddNumbersRequest addNumbersRequest, String campaignId) throws ApiException {
+        return new CampaignApi.AddNumbersRequestBuilder(addNumbersRequest, campaignId);
     }
 
     private RequestDefinition removeNumbersDefinition(RemoveNumbersRequest removeNumbersRequest) {
