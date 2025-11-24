@@ -1,10 +1,11 @@
 package com.infobip.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class RemoveNumbersRequest {
-    private java.util.List<String> numberKeys;
-    private java.util.List<String> numbers;
+    private List<String> numberKeys;
+    private List<String> numbers;
 
     /**
      * Sets numberKeys.
@@ -12,7 +13,7 @@ public class RemoveNumbersRequest {
      * @param numberKeys the list of number keys
      * @return This {@link RemoveNumbersRequest} instance.
      */
-    public RemoveNumbersRequest numberKeys(java.util.List<String> numberKeys) {
+    public RemoveNumbersRequest numberKeys(List<String> numberKeys) {
         this.numberKeys = numberKeys;
         return this;
     }
@@ -23,7 +24,7 @@ public class RemoveNumbersRequest {
      * @return numberKeys
      */
     @JsonProperty("numberKeys")
-    public java.util.List<String> getNumberKeys() {
+    public List<String> getNumberKeys() {
         return numberKeys;
     }
 
@@ -33,7 +34,7 @@ public class RemoveNumbersRequest {
      * @param numberKeys the list of number keys
      */
     @JsonProperty("numberKeys")
-    public void setNumberKeys(java.util.List<String> numberKeys) {
+    public void setNumberKeys(List<String> numberKeys) {
         this.numberKeys = numberKeys;
     }
 
@@ -43,7 +44,7 @@ public class RemoveNumbersRequest {
      * @param numbers the list of numbers
      * @return This {@link RemoveNumbersRequest} instance.
      */
-    public RemoveNumbersRequest numbers(java.util.List<String> numbers) {
+    public RemoveNumbersRequest numbers(List<String> numbers) {
         this.numbers = numbers;
         return this;
     }
@@ -54,7 +55,7 @@ public class RemoveNumbersRequest {
      * @return numbers
      */
     @JsonProperty("numbers")
-    public java.util.List<String> getNumbers() {
+    public List<String> getNumbers() {
         return numbers;
     }
 
@@ -64,7 +65,7 @@ public class RemoveNumbersRequest {
      * @param numbers the list of numbers
      */
     @JsonProperty("numbers")
-    public void setNumbers(java.util.List<String> numbers) {
+    public void setNumbers(List<String> numbers) {
         this.numbers = numbers;
     }
 }

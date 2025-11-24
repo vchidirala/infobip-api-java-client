@@ -180,7 +180,7 @@ public class CampaignApi {
         }
 
         /**
-         * Executes the BrandVet request asynchronously.
+         * Executes the CreateCampaign request asynchronously.
          *
          * @param callback The {@link ApiCallback} to be invoked.
          * @return The {@link Call} associated with the API request.
@@ -267,7 +267,7 @@ public class CampaignApi {
         return new CampaignApi.AddNumbersRequestBuilder(addNumbersRequest, campaignId);
     }
 
-    private RequestDefinition removeNumbersDefinition(RemoveNumbersRequest removeNumbersRequest) {
+    private RequestDefinition removeNumbersDefinition(RemoveNumbersRequest removeNumbersRequest, String campaignId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "POST", "/number-registration/1/campaigns/{campaignId}/remove-numbers")
                 .body(removeNumbersRequest)
@@ -275,6 +275,9 @@ public class CampaignApi {
                 .accept("application/json")
                 .contentType("application/json");
 
+        if (campaignId != null) {
+            builder.addPathParameter(new Parameter("campaignId", campaignId));
+        }
         return builder.build();
     }
 
@@ -284,9 +287,11 @@ public class CampaignApi {
     public class RemoveNumbersRequestBuilder {
 
         private final RemoveNumbersRequest request;
+        private final String campaignId;
 
-        private RemoveNumbersRequestBuilder(RemoveNumbersRequest request) {
+        private RemoveNumbersRequestBuilder(RemoveNumbersRequest request, String campaignId) {
             this.request = Objects.requireNonNull(request, "The required parameter 'RemoveNumbersRequest' is missing.");
+            this.campaignId = Objects.requireNonNull(campaignId, "The required parameter 'campaignId' is missing.");
         }
 
         /**
@@ -295,7 +300,7 @@ public class CampaignApi {
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
         public void execute() throws ApiException {
-            RequestDefinition removeNumbersDefinition = removeNumbersDefinition(request);
+            RequestDefinition removeNumbersDefinition = removeNumbersDefinition(request, campaignId);
             apiClient.execute(removeNumbersDefinition);
         }
 
@@ -306,7 +311,7 @@ public class CampaignApi {
          * @return The {@link Call} associated with the API request.
          */
         public Call executeAsync(ApiCallback<Void> callback) {
-            RequestDefinition removeNumbersDefinition = removeNumbersDefinition(request);
+            RequestDefinition removeNumbersDefinition = removeNumbersDefinition(request, campaignId);
             return apiClient.executeAsync(removeNumbersDefinition, callback);
         }
     }
@@ -319,8 +324,9 @@ public class CampaignApi {
      * @param removeNumbersRequest (required)
      * @return RemoveNumbersRequestBuilder
      */
-    public CampaignApi.RemoveNumbersRequestBuilder removeNumbersRequest(RemoveNumbersRequest removeNumbersRequest) {
-        return new CampaignApi.RemoveNumbersRequestBuilder(removeNumbersRequest);
+    public CampaignApi.RemoveNumbersRequestBuilder removeNumbersRequest(
+            RemoveNumbersRequest removeNumbersRequest, String campaignId) {
+        return new CampaignApi.RemoveNumbersRequestBuilder(removeNumbersRequest, campaignId);
     }
 
     private RequestDefinition deregisterCampaignDefinition(String campaignId) {

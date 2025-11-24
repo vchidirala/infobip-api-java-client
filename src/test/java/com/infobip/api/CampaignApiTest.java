@@ -49,26 +49,6 @@ public class CampaignApiTest extends ApiTest {
         testSuccessfulCallWithNoBody(call::executeAsync, 200);
     }
 
-    //    @Test
-    //    void shouldSubmitCampaign() throws Exception {
-    //        String campaignId = "campaign-123";
-    //        String givenRequest = "{\n" +
-    //                "  \"field1\": \"value1\",\n" +
-    //                "  \"field2\": \"value2\"\n" +
-    //                "}";
-    //
-    //        setUpEmptyPostRequest("/number-registration/1/campaigns/campaign-123/register", Map.of(), "", 200);
-    //
-    //        RegisterCampaignRequest registerRequest = new ObjectMapper().readValue(givenRequest,
-    // RegisterCampaignRequest.class);
-    //
-    //        CampaignApi api = new CampaignApi(getApiClient());
-    //        var call = api.submitCampaign(campaignId, registerRequest);
-    //
-    //        // No response body to assert, just ensure no exception is thrown
-    //        testSuccessfulCallWithNoBody(call::execute, 200);
-    //   }
-
     @Test
     void shouldGetCampaignById() throws ApiException {
         String campaignId = "campaign-123";
@@ -205,6 +185,44 @@ public class CampaignApiTest extends ApiTest {
 
         CampaignApi api = new CampaignApi(getApiClient());
         var call = api.addNumbers(addNumbersRequest, campaignId);
+
+        // No response body to assert, just ensure no exception is thrown
+        testSuccessfulCallWithNoBody(call::executeAsync, 200);
+    }
+
+    @Test
+    void shouldRemoveNumbersFromCampaign() throws Exception {
+        String campaignId = "campaign-123";
+        String givenRequest = "{\n" + "  \"numbers\": [\"+1234567890\", \"+1987654321\"],\n"
+                + "  \"numberKeys\": [\"key1\", \"key2\"]\n"
+                + "}";
+
+        // No response body expected for removeNumbers
+        setUpPostRequest("/number-registration/1/campaigns/campaign-123/remove-numbers", givenRequest, "", 200);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        RemoveNumbersRequest removeNumbersRequest = objectMapper.readValue(givenRequest, RemoveNumbersRequest.class);
+
+        CampaignApi api = new CampaignApi(getApiClient());
+        var call = api.removeNumbersRequest(removeNumbersRequest, campaignId);
+
+        // No response body to assert, just ensure no exception is thrown
+        testSuccessfulCallWithNoBody(call::executeAsync, 200);
+    }
+
+    @Test
+    void shouldSubmitCampaign() throws Exception {
+        String campaignId = "campaign-001";
+        String givenRequest = "{\n" + "  \"priorityId\": \"123\"\n" + "}";
+        // No response body expected for submitCampaign
+        setUpPostRequest("/number-registration/1/campaigns/campaign-001/register", givenRequest, "", 200);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        RegisterCampaignRequest registerCampaignRequest =
+                objectMapper.readValue(givenRequest, RegisterCampaignRequest.class);
+
+        CampaignApi api = new CampaignApi(getApiClient());
+        var call = api.submitCampaign(campaignId, registerCampaignRequest);
 
         // No response body to assert, just ensure no exception is thrown
         testSuccessfulCallWithNoBody(call::executeAsync, 200);
