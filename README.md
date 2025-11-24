@@ -33,6 +33,7 @@ The current version of this library includes this subset of Infobip products:
 * [Viber](https://www.infobip.com/docs/api/channels/viber)
 * [Messages API](https://www.infobip.com/docs/api/platform/messages-api)
 * [Moments API](https://www.infobip.com/docs/api/customer-engagement/moments)
+* [Numbers Configuration API](https://www.infobip.com/docs/api)
 
 ## General Info
 For `infobip-api-java-client` versioning we use [Semantic Versioning][semver] scheme.
@@ -212,6 +213,9 @@ For Messages API quick start guide, view [these examples](messages-api.md).
 
 #### Moments
 For Moments quick start guide, view [these examples](moments.md).
+
+#### Numbers Configuration
+For Numbers Configuration API quick start guide, view [these examples](numbers-configuration.md).
 
 ## Ask for help
 
