@@ -118,8 +118,7 @@ public class CampaignApi {
          */
         public GetCampaignResponse execute() throws ApiException {
             RequestDefinition getCampaignDefinition = getCampaignDefinition(campaignId);
-            return apiClient.execute(
-                    getCampaignDefinition, new TypeReference<GetCampaignResponse>() {}.getType());
+            return apiClient.execute(getCampaignDefinition, new TypeReference<GetCampaignResponse>() {}.getType());
         }
 
         /**
@@ -263,7 +262,8 @@ public class CampaignApi {
      * @param campaignId (required)
      * @return AddNumbersRequestBuilder
      */
-    public CampaignApi.AddNumbersRequestBuilder addNumbers(AddNumbersRequest addNumbersRequest, String campaignId) throws ApiException {
+    public CampaignApi.AddNumbersRequestBuilder addNumbers(AddNumbersRequest addNumbersRequest, String campaignId)
+            throws ApiException {
         return new CampaignApi.AddNumbersRequestBuilder(addNumbersRequest, campaignId);
     }
 

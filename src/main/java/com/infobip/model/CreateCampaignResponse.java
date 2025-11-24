@@ -1030,5 +1030,4 @@ public class CreateCampaignResponse {
     public void setCampaignFeedback(CampaignFeedback campaignFeedback) {
         this.campaignFeedback = campaignFeedback;
     }
-
 }

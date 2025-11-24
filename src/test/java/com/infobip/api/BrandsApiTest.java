@@ -5,11 +5,10 @@ import static org.assertj.core.api.BDDAssertions.then;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infobip.model.*;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Consumer;
+import org.junit.jupiter.api.Test;
 
 class BrandsApiTest extends ApiTest {
 
@@ -98,28 +97,27 @@ class BrandsApiTest extends ApiTest {
     void shouldGetBrandById() {
 
         String brandId = "brand-123";
-        String givenResponse = "{\n" +
-                "  \"id\": \"brand-123\",\n" +
-                "  \"applicationId\": \"app-123\",\n" +
-                "  \"entityId\": \"entity-456\",\n" +
-                "  \"name\": \"Example Brand\",\n" +
-                "  \"stage\": \"ACTIVE\",\n" +
-                "  \"website\": \"https://example.com\",\n" +
-                "  \"createdDate\": \"2023-01-01T12:00:00\",\n" +
-                "  \"lastModifiedDate\": \"2023-01-02T12:00:00\",\n" +
-                "  \"referenceId\": \"ref-789\",\n" +
-                "  \"legalName\": \"Example Legal Name\",\n" +
-                "  \"countryCode\": \"US\",\n" +
-                "  \"supportEmail\": \"support@example.com\",\n" +
-                "  \"supportPhone\": \"+1234567890\",\n" +
-                "  \"vertical\": \"TECH\",\n" +
-                "  \"taxId\": \"TAX123456\",\n" +
-                "  \"taxIdIssuingCountry\": \"US\",\n" +
-                "  \"type\": \"BUSINESS\",\n" +
-                "  \"stockExchange\": \"NASDAQ\",\n" +
-                "  \"stockSymbol\": \"EXMPL\",\n" +
-                "  \"businessContactEmail\": \"contact@example.com\"\n" +
-                "}";
+        String givenResponse = "{\n" + "  \"id\": \"brand-123\",\n"
+                + "  \"applicationId\": \"app-123\",\n"
+                + "  \"entityId\": \"entity-456\",\n"
+                + "  \"name\": \"Example Brand\",\n"
+                + "  \"stage\": \"ACTIVE\",\n"
+                + "  \"website\": \"https://example.com\",\n"
+                + "  \"createdDate\": \"2023-01-01T12:00:00\",\n"
+                + "  \"lastModifiedDate\": \"2023-01-02T12:00:00\",\n"
+                + "  \"referenceId\": \"ref-789\",\n"
+                + "  \"legalName\": \"Example Legal Name\",\n"
+                + "  \"countryCode\": \"US\",\n"
+                + "  \"supportEmail\": \"support@example.com\",\n"
+                + "  \"supportPhone\": \"+1234567890\",\n"
+                + "  \"vertical\": \"TECH\",\n"
+                + "  \"taxId\": \"TAX123456\",\n"
+                + "  \"taxIdIssuingCountry\": \"US\",\n"
+                + "  \"type\": \"BUSINESS\",\n"
+                + "  \"stockExchange\": \"NASDAQ\",\n"
+                + "  \"stockSymbol\": \"EXMPL\",\n"
+                + "  \"businessContactEmail\": \"contact@example.com\"\n"
+                + "}";
 
         setUpSuccessGetRequest("/number-registration/1/brands/brand-123", Map.of(), givenResponse);
 
@@ -151,7 +149,6 @@ class BrandsApiTest extends ApiTest {
         testSuccessfulCall(call::execute, assertions);
     }
 
-
     @Test
     void shouldDeleteBrandById() {
         String brandId = "brand-123";
@@ -162,7 +159,6 @@ class BrandsApiTest extends ApiTest {
 
         // No response body to assert, just ensure no exception is thrown
         testSuccessfulCallWithNoBody(call::executeAsync, 200);
-
     }
 
     @Test
@@ -181,11 +177,10 @@ class BrandsApiTest extends ApiTest {
     @Test
     void shouldGetBrandRegistrarStatuses() {
         String brandId = "brand-123";
-        String givenResponse = "{\n" +
-                "      \"registrar\": \"SOME_REGISTRAR\",\n" +
-                "      \"state\": \"APPROVED\",\n" +
-                "      \"brandIdentityStatus\": \"test\"\n" +
-                "}";
+        String givenResponse = "{\n" + "      \"registrar\": \"SOME_REGISTRAR\",\n"
+                + "      \"state\": \"APPROVED\",\n"
+                + "      \"brandIdentityStatus\": \"test\"\n"
+                + "}";
 
         setUpSuccessGetRequest("/number-registration/1/brands/brand-123/registrar-statuses", Map.of(), givenResponse);
 
@@ -204,19 +199,14 @@ class BrandsApiTest extends ApiTest {
     void shouldVetBrand() throws JsonProcessingException {
 
         String brandId = "brand-123";
-        String givenRequest = "{\n" +
-                "  \"status\": \"STANDARD\",\n" +
-                "  \"type\": \"Some info\"\n" +
-                "}";
-        String givenResponse = "{\n" +
-                "  \"vetId\": \"vet-456\",\n" +
-                "  \"brandId\": \"brand-123\",\n" +
-                "  \"status\": \"APPROVED\",\n" +
-                "  \"createdDate\": \"2023-01-01T12:00:00\"\n" +
-                "}";
+        String givenRequest = "{\n" + "  \"status\": \"STANDARD\",\n" + "  \"type\": \"Some info\"\n" + "}";
+        String givenResponse = "{\n" + "  \"vetId\": \"vet-456\",\n"
+                + "  \"brandId\": \"brand-123\",\n"
+                + "  \"status\": \"APPROVED\",\n"
+                + "  \"createdDate\": \"2023-01-01T12:00:00\"\n"
+                + "}";
 
         setUpPostRequest("/number-registration/1/brands/brand-123/vets", givenRequest, givenResponse, 200);
-
 
         Consumer<BrandVetResponse> assertions = (vetResponse) -> {
             then(vetResponse.getVetId()).isEqualTo("vet-456");
@@ -237,11 +227,10 @@ class BrandsApiTest extends ApiTest {
 
         String brandId = "brand-123";
         String vetId = "vet-456";
-        String givenResponse = "{\n" +
-                "  \"vetId\": \"vet-456\",\n" +
-                "  \"brandId\": \"brand-123\",\n" +
-                "  \"status\": \"APPROVED\"\n" +
-                "}";
+        String givenResponse = "{\n" + "  \"vetId\": \"vet-456\",\n"
+                + "  \"brandId\": \"brand-123\",\n"
+                + "  \"status\": \"APPROVED\"\n"
+                + "}";
 
         setUpSuccessGetRequest("/number-registration/1/brands/brand-123/vets/vet-456", Map.of(), givenResponse);
 

@@ -303,7 +303,7 @@ public class BrandApi {
                 .accept("application/json")
                 .contentType("application/json");
 
-        if(brandId != null) {
+        if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));
         }
 
@@ -315,7 +315,7 @@ public class BrandApi {
     public class VetBrandRequest {
 
         private final BrandVetRequest request;
-        private final  String brandId;
+        private final String brandId;
 
         private VetBrandRequest(BrandVetRequest request, String brandId) {
             this.request = Objects.requireNonNull(request, "The required parameter 'BrandVetRequest' is missing.");
