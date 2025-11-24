@@ -78,6 +78,7 @@ public class BrandApi {
     private RequestDefinition getBrandsDefinition(String brandId) {
         RequestDefinition.Builder builder = RequestDefinition.builder("GET", "/number-registration/1/brands/{brandId}")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));
@@ -99,9 +100,9 @@ public class BrandApi {
          * Executes the getBrands request
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
-        public GetBrandResponse execute() throws ApiException {
+        public BrandResponse execute() throws ApiException {
             RequestDefinition getBrandsDefinition = getBrandsDefinition(brandId);
-            return apiClient.execute(getBrandsDefinition, new TypeReference<GetBrandResponse>() {}.getType());
+            return apiClient.execute(getBrandsDefinition, new TypeReference<BrandResponse>() {}.getType());
         }
 
         /**
@@ -113,7 +114,7 @@ public class BrandApi {
         public Call executeAsync(ApiCallback<Void> callback) {
             RequestDefinition getBrandsDefinition = getBrandsDefinition(brandId);
             return apiClient.executeAsync(
-                    getBrandsDefinition, new TypeReference<GetBrandResponse>() {}.getType(), callback);
+                    getBrandsDefinition, new TypeReference<BrandResponse>() {}.getType(), callback);
         }
     }
     /**
@@ -184,8 +185,9 @@ public class BrandApi {
     private RequestDefinition registerBrandDefinition(String brandId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "POST", "/number-registration/1/brands/{brandId}/register")
-                .requiresAuthentication(true)
-                .contentType("application/json");
+                .accept("application/json")
+                .requiresAuthentication(true);
+
         if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));
         }
@@ -238,6 +240,7 @@ public class BrandApi {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "GET", "/number-registration/1/brands/{brandId}/registrar-statuses")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));
@@ -292,13 +295,17 @@ public class BrandApi {
         return new GetBrandRegistrarStatusesRequest(brandId);
     }
 
-    private RequestDefinition vetBrandDefinition(BrandVetRequest brandVetRequest) {
+    private RequestDefinition vetBrandDefinition(BrandVetRequest brandVetRequest, String brandId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "POST", "/number-registration/1/brands/{brandId}/vets")
                 .body(brandVetRequest)
                 .requiresAuthentication(true)
                 .accept("application/json")
                 .contentType("application/json");
+
+        if(brandId != null) {
+            builder.addPathParameter(new Parameter("brandId", brandId));
+        }
 
         return builder.build();
     }
@@ -308,9 +315,11 @@ public class BrandApi {
     public class VetBrandRequest {
 
         private final BrandVetRequest request;
+        private final  String brandId;
 
-        private VetBrandRequest(BrandVetRequest request) {
+        private VetBrandRequest(BrandVetRequest request, String brandId) {
             this.request = Objects.requireNonNull(request, "The required parameter 'BrandVetRequest' is missing.");
+            this.brandId = Objects.requireNonNull(brandId, "The required parameter 'brandId' is missing.");
         }
 
         /**
@@ -318,7 +327,7 @@ public class BrandApi {
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
         public BrandVetResponse execute() throws ApiException {
-            RequestDefinition vetBrandDefinition = vetBrandDefinition(request);
+            RequestDefinition vetBrandDefinition = vetBrandDefinition(request, brandId);
             return apiClient.execute(vetBrandDefinition, new TypeReference<BrandVetResponse>() {}.getType());
         }
 
@@ -329,7 +338,7 @@ public class BrandApi {
          * @return The {@link Call} associated with the API request.
          */
         public Call executeAsync(ApiCallback<Void> callback) {
-            RequestDefinition vetBrandDefinition = vetBrandDefinition(request);
+            RequestDefinition vetBrandDefinition = vetBrandDefinition(request, brandId);
             return apiClient.executeAsync(
                     vetBrandDefinition, new TypeReference<BrandVetResponse>() {}.getType(), callback);
         }
@@ -340,16 +349,18 @@ public class BrandApi {
      * vet Brand.
      *
      * @param brandVetRequest  (required)
+     * @param brandId  (required)
      * @return VetBrandRequest
      */
-    public VetBrandRequest vetBrand(BrandVetRequest brandVetRequest) {
-        return new VetBrandRequest(brandVetRequest);
+    public VetBrandRequest vetBrand(BrandVetRequest brandVetRequest, String brandId) {
+        return new VetBrandRequest(brandVetRequest, brandId);
     }
 
     private RequestDefinition getBrandVetDefinition(String brandId, String vetId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "GET", "/number-registration/1/brands/{brandId}/vets/{vetId}")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));
@@ -409,6 +420,7 @@ public class BrandApi {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "POST", "/number-registration/1/brands/{brandId}/resend2fa")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (brandId != null) {
             builder.addPathParameter(new Parameter("brandId", brandId));

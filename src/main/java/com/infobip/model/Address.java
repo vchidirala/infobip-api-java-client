@@ -29,7 +29,7 @@ public class Address {
     }
 
     /**
-     * Sets city.
+     * Sets the city.
      *
      * @param city the city
      */
@@ -39,9 +39,9 @@ public class Address {
     }
 
     /**
-     * Sets state.
+     * Sets the state.
      *
-     * @param state the state
+     * @param state
      * @return This {@link Address} instance.
      */
     public Address state(String state) {
