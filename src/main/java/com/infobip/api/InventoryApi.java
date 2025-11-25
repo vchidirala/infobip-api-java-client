@@ -52,7 +52,7 @@ public class InventoryApi {
          * @return NumberPurchaseOrderResponse
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
-        public List<GetCampaignNetworkStatusResponse> execute() throws ApiException {
+        public NumberPurchaseOrderResponse execute() throws ApiException {
             RequestDefinition orderNumberDefinition = orderNumberDefinition(numberPurchaseOrderRequest);
             return apiClient.execute(
                     orderNumberDefinition, new TypeReference<NumberPurchaseOrderResponse>() {}.getType());
@@ -88,9 +88,10 @@ public class InventoryApi {
         RequestDefinition.Builder builder = RequestDefinition.builder(
                         "GET", "/numbers/2/purchase-order/[orderId]/status")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (orderId != null) {
-            builder.addPathParameter(new Parameter("orderId", orderId));
+            builder.addPathParameter(new Parameter("[orderId]", orderId));
         }
         return builder.build();
     }
@@ -112,7 +113,7 @@ public class InventoryApi {
          * @return GetNumberPurchaseOrderStatusResponse
          * @throws ApiException If the API call fails or an error occurs during the request or response processing.
          */
-        public List<GetCampaignNetworkStatusResponse> execute() throws ApiException {
+        public GetNumberPurchaseOrderStatusResponse execute() throws ApiException {
             RequestDefinition getNumberOrderStatusDefinition = getNumberOrderStatusDefinition(orderId);
             return apiClient.execute(
                     getNumberOrderStatusDefinition,
