@@ -3,9 +3,9 @@ package com.infobip.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BillingDetails {
-    public double setupFee;
-    public double monthlyFee;
-    public double totalPaid;
+    public Double setupFee;
+    public Double monthlyFee;
+    public Double totalPaid;
 
     /**
      * Sets setupFee.
@@ -13,7 +13,7 @@ public class BillingDetails {
      * @param setupFee the setup fee
      * @return This {@link BillingDetails} instance.
      */
-    public BillingDetails setupFee(double setupFee) {
+    public BillingDetails setupFee(Double setupFee) {
         this.setupFee = setupFee;
         return this;
     }
@@ -24,7 +24,7 @@ public class BillingDetails {
      * @return setupFee
      */
     @JsonProperty("setupFee")
-    public double getSetupFee() {
+    public Double getSetupFee() {
         return setupFee;
     }
 
@@ -34,7 +34,7 @@ public class BillingDetails {
      * @param setupFee the setup fee
      */
     @JsonProperty("setupFee")
-    public void setSetupFee(double setupFee) {
+    public void setSetupFee(Double setupFee) {
         this.setupFee = setupFee;
     }
 
@@ -44,7 +44,7 @@ public class BillingDetails {
      * @param monthlyFee the monthly fee
      * @return This {@link BillingDetails} instance.
      */
-    public BillingDetails monthlyFee(double monthlyFee) {
+    public BillingDetails monthlyFee(Double monthlyFee) {
         this.monthlyFee = monthlyFee;
         return this;
     }
@@ -55,7 +55,7 @@ public class BillingDetails {
      * @return monthlyFee
      */
     @JsonProperty("monthlyFee")
-    public double getMonthlyFee() {
+    public Double getMonthlyFee() {
         return monthlyFee;
     }
 
@@ -65,7 +65,7 @@ public class BillingDetails {
      * @param monthlyFee the monthly fee
      */
     @JsonProperty("monthlyFee")
-    public void setMonthlyFee(double monthlyFee) {
+    public void setMonthlyFee(Double monthlyFee) {
         this.monthlyFee = monthlyFee;
     }
 
@@ -75,7 +75,7 @@ public class BillingDetails {
      * @param totalPaid the total paid
      * @return This {@link BillingDetails} instance.
      */
-    public BillingDetails totalPaid(double totalPaid) {
+    public BillingDetails totalPaid(Double totalPaid) {
         this.totalPaid = totalPaid;
         return this;
     }
@@ -86,7 +86,7 @@ public class BillingDetails {
      * @return totalPaid
      */
     @JsonProperty("totalPaid")
-    public double getTotalPaid() {
+    public Double getTotalPaid() {
         return totalPaid;
     }
 
@@ -96,7 +96,7 @@ public class BillingDetails {
      * @param totalPaid the total paid
      */
     @JsonProperty("totalPaid")
-    public void setTotalPaid(double totalPaid) {
+    public void setTotalPaid(Double totalPaid) {
         this.totalPaid = totalPaid;
     }
 
@@ -107,7 +107,7 @@ public class BillingDetails {
      * @param monthlyFee the monthly fee
      * @param totalPaid the total paid
      */
-    public BillingDetails(double setupFee, double monthlyFee, double totalPaid) {
+    public BillingDetails(Double setupFee, Double monthlyFee, Double totalPaid) {
         this.setupFee = setupFee;
         this.monthlyFee = monthlyFee;
         this.totalPaid = totalPaid;

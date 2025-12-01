@@ -85,12 +85,12 @@ public class InventoryApi {
 
     private RequestDefinition getNumberOrderStatusDefinition(String orderId) {
         RequestDefinition.Builder builder = RequestDefinition.builder(
-                        "GET", "/numbers/2/purchase-order/[orderId]/status")
+                        "GET", "/numbers/2/purchase-order/{orderId}/status")
                 .requiresAuthentication(true)
                 .accept("application/json")
                 .contentType("application/json");
         if (orderId != null) {
-            builder.addPathParameter(new Parameter("[orderId]", orderId));
+            builder.addPathParameter(new Parameter("orderId", orderId));
         }
         return builder.build();
     }
@@ -205,6 +205,7 @@ public class InventoryApi {
     private RequestDefinition listPurchasedNumbersDefinition(List<String> countries, int page, int limit) {
         RequestDefinition.Builder builder = RequestDefinition.builder("GET", "/numbers/1/numbers")
                 .requiresAuthentication(true)
+                .accept("application/json")
                 .contentType("application/json");
         if (countries != null && !countries.isEmpty()) {
             builder.addQueryParameter(new Parameter("countries", countries));
@@ -263,5 +264,116 @@ public class InventoryApi {
     public ListPurchasedNumbersRequest listPurchasedNumbers(List<String> countries, int page, int limit)
             throws ApiException {
         return new ListPurchasedNumbersRequest(countries, page, limit);
+    }
+
+    private RequestDefinition getOneNumberDefinition(String numberKey) {
+        RequestDefinition.Builder builder = RequestDefinition.builder("GET", "/numbers/1/numbers/{numberKey}")
+                .requiresAuthentication(true)
+                .accept("application/json")
+                .contentType("application/json");
+        if (numberKey != null) {
+            builder.addPathParameter(new Parameter("numberKey", numberKey));
+        }
+        return builder.build();
+    }
+
+    /**
+     * GetOneNumber request builder class.
+     */
+    public class GetOneNumberRequest {
+
+        private final String numberKey;
+
+        private GetOneNumberRequest(String numberKey) {
+            this.numberKey = Objects.requireNonNull(numberKey, "The required parameter 'numberKey' is missing.");
+        }
+
+        /**
+         * Executes the GetOneNumber request
+         *
+         * @return Number
+         * @throws ApiException If the API call fails or an error occurs during the request or response processing.
+         */
+        public Number execute() throws ApiException {
+            RequestDefinition getOneNumberDefinition = getOneNumberDefinition(numberKey);
+            return apiClient.execute(getOneNumberDefinition, new TypeReference<Number>() {}.getType());
+        }
+
+        /**
+         * Executes the GetOneNumber request asynchronously.
+         *
+         * @param callback The {@link ApiCallback} to be invoked.
+         * @return The {@link Call} associated with the API request.
+         */
+        public Call executeAsync(ApiCallback<GetPurchasedNumbersResponse> callback) {
+            RequestDefinition getOneNumberDefinition = getOneNumberDefinition(numberKey);
+            return apiClient.executeAsync(getOneNumberDefinition, new TypeReference<Number>() {}.getType(), callback);
+        }
+    }
+
+    /**
+     * GetOneNumber.
+     *
+     * @param numberKey (required)
+     * @return GetOneNumberRequest
+     */
+    public GetOneNumberRequest getOneNumber(String numberKey) throws ApiException {
+        return new GetOneNumberRequest(numberKey);
+    }
+
+    private RequestDefinition getAvailableNumberDefinition(GetAvailableNumbersRequest request) {
+        RequestDefinition.Builder builder = RequestDefinition.builder("GET", "/numbers/1/numbers/available")
+                .requiresAuthentication(true)
+                .accept("application/json")
+                .contentType("application/json");
+
+        return builder.build();
+    }
+
+    /**
+     * getAvailableNumber request builder class.
+     */
+    public class GetAvailableNumberRequestBuilder {
+
+        private final GetAvailableNumbersRequest request;
+
+        private GetAvailableNumberRequestBuilder(GetAvailableNumbersRequest request) {
+            this.request =
+                    Objects.requireNonNull(request, "The required parameter 'GetAvailableNumbersRequest' is missing.");
+        }
+
+        /**
+         * Executes the GetAvailableNumberRequestBuilder request
+         *
+         * @return GetAvailableNumbersResponse
+         * @throws ApiException If the API call fails or an error occurs during the request or response processing.
+         */
+        public GetAvailableNumbersResponse execute() throws ApiException {
+            RequestDefinition getOneNumberDefinition = getAvailableNumberDefinition(request);
+            return apiClient.execute(
+                    getOneNumberDefinition, new TypeReference<GetAvailableNumbersResponse>() {}.getType());
+        }
+
+        /**
+         * Executes the GetAvailableNumberRequestBuilder request asynchronously.
+         *
+         * @param callback The {@link ApiCallback} to be invoked.
+         * @return The {@link Call} associated with the API request.
+         */
+        public Call executeAsync(ApiCallback<GetPurchasedNumbersResponse> callback) {
+            RequestDefinition getOneNumberDefinition = getAvailableNumberDefinition(request);
+            return apiClient.executeAsync(
+                    getOneNumberDefinition, new TypeReference<GetAvailableNumbersResponse>() {}.getType(), callback);
+        }
+    }
+
+    /**
+     * GetAvailableNumber.
+     *
+     * @param request (required)
+     * @return GetAvailableNumberRequestBuilder
+     */
+    public GetAvailableNumberRequestBuilder getAvailableNumber(GetAvailableNumbersRequest request) {
+        return new GetAvailableNumberRequestBuilder(request);
     }
 }
