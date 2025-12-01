@@ -18,6 +18,7 @@ import com.infobip.RequestDefinition;
 import com.infobip.model.WhatsAppAudioMessage;
 import com.infobip.model.WhatsAppBulkMessage;
 import com.infobip.model.WhatsAppBulkMessageInfo;
+import com.infobip.model.WhatsAppBusinessAccountRequest;
 import com.infobip.model.WhatsAppBusinessInfoRequest;
 import com.infobip.model.WhatsAppBusinessInfoResponse;
 import com.infobip.model.WhatsAppContactsMessage;
@@ -2665,5 +2666,62 @@ public class WhatsAppApi {
     public VerifyWhatsappSenderRequest verifyWhatsappSender(
             String sender, WhatsAppVerifyCodeRequest whatsAppVerifyCodeRequest) {
         return new VerifyWhatsappSenderRequest(sender, whatsAppVerifyCodeRequest);
+    }
+
+    private RequestDefinition shareWhatsAppBusinessAccountDefinition(
+            WhatsAppBusinessAccountRequest whatsAppBusinessAccountRequest) {
+        RequestDefinition.Builder builder = RequestDefinition.builder(
+                        "POST", "/whatsapp/1/embedded-signup/registrations/share-waba")
+                .body(whatsAppBusinessAccountRequest)
+                .requiresAuthentication(true)
+                .accept("application/json")
+                .contentType("application/json");
+
+        return builder.build();
+    }
+    /**
+     * ShareWhatsAppBusinessAccount request builder class.
+     */
+    public class ShareWhatsAppBusinessAccountRequest {
+
+        private final WhatsAppBusinessAccountRequest request;
+
+        private ShareWhatsAppBusinessAccountRequest(WhatsAppBusinessAccountRequest request) {
+            this.request = Objects.requireNonNull(
+                    request, "The required parameter 'ShareWhatsAppBusinessAccountRequest' is missing.");
+        }
+
+        /**
+         * Executes the shareWhatsAppBusinessAccount request
+         * @throws ApiException If the API call fails or an error occurs during the request or response processing.
+         */
+        public void execute() throws ApiException {
+            RequestDefinition shareWhatsAppBusinessAccountDefinition = shareWhatsAppBusinessAccountDefinition(request);
+            apiClient.execute(shareWhatsAppBusinessAccountDefinition);
+        }
+
+        /**
+         * Executes the ShareWhatsAppBusinessAccount request asynchronously.
+         *
+         * @param callback The {@link ApiCallback} to be invoked.
+         * @return The {@link okhttp3.Call} associated with the API request.
+         */
+        public okhttp3.Call executeAsync(ApiCallback<Void> callback) {
+            RequestDefinition shareWhatsAppBusinessAccountDefinition = shareWhatsAppBusinessAccountDefinition(request);
+            return apiClient.executeAsync(shareWhatsAppBusinessAccountDefinition, callback);
+        }
+    }
+    /**
+     * Share WhatsApp business account.
+     * <p>
+     * Share WhatsApp business account Id.
+     *
+     * @param whatsAppBusinessAccountRequest  (required)
+     * @return ShareWhatsAppBusinessAccountRequest
+     * @see <a href="https://www.infobip.com/docs/whatsapp">Learn more about WhatsApp channel and use cases</a>
+     */
+    public ShareWhatsAppBusinessAccountRequest shareWhatsAppBusinessAccount(
+            WhatsAppBusinessAccountRequest whatsAppBusinessAccountRequest) {
+        return new ShareWhatsAppBusinessAccountRequest(whatsAppBusinessAccountRequest);
     }
 }
