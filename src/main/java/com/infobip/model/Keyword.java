@@ -1,10 +1,11 @@
 package com.infobip.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class Keyword {
     private String callToAction;
-    private java.util.List<String> keywords;
+    private List<String> keywords;
     /**
      * Returns callToAction.
      * <p>
@@ -40,7 +41,7 @@ public class Keyword {
      * @return keywords
      */
     @JsonProperty("keywords")
-    public java.util.List<String> getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
@@ -53,18 +54,7 @@ public class Keyword {
      * @param keywords
      */
     @JsonProperty("keywords")
-    public void setKeywords(java.util.List<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    /**
-     * Constructs a new Keyword.
-     *
-     * @param callToAction The call to action.
-     * @param keywords The list of keywords.
-     */
-    public Keyword(String callToAction, java.util.List<String> keywords) {
-        this.callToAction = callToAction;
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 }
