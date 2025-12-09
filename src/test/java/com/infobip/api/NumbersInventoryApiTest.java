@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
-public class InventoryApiTest extends ApiTest {
+public class NumbersInventoryApiTest extends ApiTest {
 
     @Test
     void shouldOrderNumber() throws ApiException, JsonProcessingException {
@@ -27,7 +27,7 @@ public class InventoryApiTest extends ApiTest {
         ObjectMapper objectMapper = new ObjectMapper();
         NumberPurchaseOrderRequest request = objectMapper.readValue(givenRequest, NumberPurchaseOrderRequest.class);
 
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.orderNumber(request);
         testSuccessfulCall(call::execute, assertions);
     }
@@ -47,7 +47,7 @@ public class InventoryApiTest extends ApiTest {
             then(response.getAdditionalData().getState()).isEqualTo("test");
         };
 
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.getNumberOrderStatus(orderId);
         testSuccessfulCall(call::execute, assertions);
     }
@@ -67,7 +67,7 @@ public class InventoryApiTest extends ApiTest {
         ObjectMapper objectMapper = new ObjectMapper();
         OldPurchaseNumberRequest request = objectMapper.readValue(givenRequest, OldPurchaseNumberRequest.class);
 
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.oldNumbers(request);
         testSuccessfulCall(call::execute, assertions);
     }
@@ -85,7 +85,7 @@ public class InventoryApiTest extends ApiTest {
             then(response.getNumbers().get(1).getCountry()).isEqualTo("CA");
             then(response.getNumberCount()).isEqualTo(2);
         };
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.listPurchasedNumbers(null, 1, 10);
         testSuccessfulCall(call::execute, assertions);
     }
@@ -102,7 +102,7 @@ public class InventoryApiTest extends ApiTest {
             then(response.getNumbers().get(0).getCountry()).isEqualTo("US");
             then(response.getNumbers().get(1).getCountry()).isEqualTo("CA");
         };
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.getAvailableNumber(new GetAvailableNumbersRequest());
         testSuccessfulCall(call::execute, assertions);
     }
@@ -117,7 +117,7 @@ public class InventoryApiTest extends ApiTest {
             then(response.getNumber()).isEqualTo("+1234567890");
             then(response.getCountry()).isEqualTo("US");
         };
-        InventoryApi api = new InventoryApi(getApiClient());
+        NumbersInventoryApi api = new NumbersInventoryApi(getApiClient());
         var call = api.getOneNumber(numberKey);
         testSuccessfulCall(call::execute, assertions);
     }

@@ -11,7 +11,7 @@ import okhttp3.Call;
 /**
  * Represents InventoryApi API client.
  */
-public class InventoryApi {
+public class NumbersInventoryApi {
 
     private final ApiClient apiClient;
 
@@ -20,7 +20,7 @@ public class InventoryApi {
      *
      * @param apiClient {@link ApiClient} instance to delegate calls to.
      */
-    public InventoryApi(ApiClient apiClient) {
+    public NumbersInventoryApi(ApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "ApiClient must not be null!");
     }
 
